@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="exam_report" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1d96ea3f-6b92-46d0-9185-8150d50a1953">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="title" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="examName" class="java.lang.String"/>
+	<field name="examDate" class="java.lang.String"/>
+	<field name="examHour" class="java.lang.String"/>
+	<field name="examMin" class="java.lang.String"/>
+	<field name="userName" class="java.lang.String"/>
+	<field name="passMark" class="java.lang.Integer"/>
+	<field name="marks" class="java.lang.Integer"/>
+	<field name="passStatus" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="88" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="68" forecolor="#FFFFFF" backcolor="#995D5C" uuid="23b7aa92-0b67-4fe6-9240-c60a39570680"/>
+			</rectangle>
+			<textField>
+				<reportElement x="0" y="0" width="555" height="68" uuid="b5c29920-a095-447c-aa37-ec2e65d8d08e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{title}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="479" y="10" width="65" height="50" uuid="b5503942-445c-4fa8-bd40-c2826aaabe90"/>
+				<imageExpression><![CDATA["D:/Wallpaper/1.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="91" splitType="Stretch">
+			<staticText>
+				<reportElement x="30" y="10" width="80" height="30" uuid="23c54ab5-948f-4604-bb77-e73f518ee628"/>
+				<text><![CDATA[ExamName]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="10" width="100" height="30" uuid="e4bbc5d9-81a2-4146-82b7-fdeaea846596"/>
+				<text><![CDATA[ExamDateTime]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="10" width="70" height="30" uuid="83fc26c4-92a6-4188-b776-fe5d2e98b99d"/>
+				<text><![CDATA[PassMark]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="10" width="70" height="30" uuid="21a69858-beb3-445e-b4a7-8a7c1b0be241"/>
+				<text><![CDATA[Marks]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="10" width="60" height="30" uuid="4e9e357a-c0cf-4a12-9aa4-977caae23e59"/>
+				<text><![CDATA[Username]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="440" y="10" width="60" height="30" uuid="183d202a-1f96-4f09-b29b-57a594571be9"/>
+				<text><![CDATA[PassStatus]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="30" y="40" width="60" height="30" uuid="242731c8-4466-4d96-ad6c-d93e8ce5f576"/>
+				<textFieldExpression><![CDATA[$F{examName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="40" width="59" height="30" uuid="5d4e787d-e95e-4dc0-a6ea-0497765c309c"/>
+				<textFieldExpression><![CDATA[$F{examDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="40" width="20" height="30" uuid="65427e2c-5e93-4b31-b8eb-34113ddda802"/>
+				<textFieldExpression><![CDATA[$F{examHour} +"H :"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="40" width="70" height="30" uuid="799b2efd-b23c-4790-aba3-8c02974f73f7"/>
+				<textFieldExpression><![CDATA[$F{passMark}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="290" y="40" width="70" height="30" uuid="a7047558-b46f-46ee-a6de-460cdd6253ed"/>
+				<textFieldExpression><![CDATA[$F{marks}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="40" width="60" height="30" uuid="5de3a331-209c-4727-878d-cc380710107c"/>
+				<textFieldExpression><![CDATA[$F{userName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="440" y="40" width="50" height="30" uuid="025b2305-a26e-4cd9-8a1d-b48fe22cdb7d"/>
+				<textFieldExpression><![CDATA[$F{passStatus}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="170" y="40" width="20" height="30" uuid="12c17500-fb59-47d3-9399-6f9e531d38dc"/>
+				<textFieldExpression><![CDATA[$F{examMin} +"M"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="10" width="30" height="30" uuid="78abe83f-7fc5-4378-80e7-dde0fa97e18d"/>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="40" width="26" height="30" uuid="25e2adb1-8d89-49a2-85bc-1bee07989302"/>
+				<textFieldExpression><![CDATA[$V{COLUMN_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch"/>
+	</detail>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

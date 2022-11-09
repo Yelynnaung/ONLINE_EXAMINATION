@@ -4,6 +4,11 @@
 <!DOCTYPE html>
 <head>
 <title>Exam Result</title>
+<script>
+function exportPDF(){
+	window.location.href = "/examResult/exportPDF";
+}
+</script>
 </head>
 <body>
 <div align="center">
@@ -36,7 +41,8 @@
 					</tr>
 				</c:forEach>
 			</table>
-		</form:form>
+		</form:form><br/><br/>
+		<input type="button" value="ExportPDF" onclick="exportPDF();"/>
 	</c:if>
 </div>
 
