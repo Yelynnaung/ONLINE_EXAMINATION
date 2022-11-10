@@ -15,6 +15,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -74,8 +76,12 @@ public class UserController {
 	}
 
 	@PostMapping("/save")
-	public String save(@ModelAttribute User newUser, @RequestParam("image") MultipartFile inputFile,
-			HttpSession session) throws Exception {
+	public String save(@Validated @ModelAttribute User newUser, BindingResult br,
+			@RequestParam("image") MultipartFile inputFile, HttpSession session, Model model) throws Exception {
+		if (br.hasErrors()) {
+			model.addAttribute("roles", getRoles());
+			return "userCreateUpdate";
+		}
 		if (newUser.getId() == 0) {
 			newUser.setPhoto(inputFile.getOriginalFilename());
 			newUser.setCreatedDateTime(new Date());
@@ -147,9 +153,11 @@ public class UserController {
 	}
 
 	private void uploadImage(MultipartFile inputFile) throws IOException {
-		Path path = Paths.get(UPLOAD_DIRECTORY + inputFile.getOriginalFilename());
-		new File(UPLOAD_DIRECTORY).mkdir();
-		Files.write(path, inputFile.getBytes());
+		if (!inputFile.getOriginalFilename().equals("")) {
+			Path path = Paths.get(UPLOAD_DIRECTORY + inputFile.getOriginalFilename());
+			new File(UPLOAD_DIRECTORY).mkdir();
+			Files.write(path, inputFile.getBytes());
+		}
 	}
 
 	private void deleteFromExamUser(int userId) {

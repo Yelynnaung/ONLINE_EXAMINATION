@@ -14,7 +14,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "user")
@@ -24,30 +28,36 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@NotEmpty(message = " * Please enter username")
 	@Column(name = "username")
 	private String username;
 
-	@Column(name = "password")
-	private String password;
-
-	@Transient
-	private String confirmPassword;
-
+	@NotEmpty(message = " * Please enter email")
+	@Email(message = " * Email must be valid")
 	@Column(name = "email")
 	private String email;
 
+	@Pattern(regexp = "^.*(?=.{6,})(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!#$%&?@ \"]).*$", message = " * Password must contain number,char and special char more than 6")
+	@Column(name = "password")
+	private String password;
+
+	@Pattern(regexp = "^[09]+[0-9]{9}$", message = " * Phone must be valid")
 	@Column(name = "phone")
 	private String phone;
 
+	@Digits(message = " * Must be 1 or 2 digit number", fraction = 0, integer = 2)
 	@Column(name = "age")
-	private int age;
+	private String age;
 
 	@Column(name = "gender")
 	private String gender;
 
+	@NotEmpty(message = " * Please enter dob")
 	@Column(name = "dob")
 	private String dob;
 
+	@NotEmpty(message = " * Please enter address")
+	@Size(max = 100, message = "No more than 100 character")
 	@Column(name = "address")
 	private String address;
 
@@ -72,12 +82,11 @@ public class User {
 	}
 
 	public User(String name, String username, String password, String confirmPassword, String email, String phone,
-			int age, String gender, String dob, String address, String role, String photo, Date createdDateTime,
+			String age, String gender, String dob, String address, String role, String photo, Date createdDateTime,
 			Date updatedDateTime) {
 		super();
 		this.username = username;
 		this.password = password;
-		this.confirmPassword = confirmPassword;
 		this.email = email;
 		this.phone = phone;
 		this.age = age;
@@ -130,19 +139,11 @@ public class User {
 		this.phone = phone;
 	}
 
-	public String getConfirmPassword() {
-		return confirmPassword;
-	}
-
-	public void setConfirmPassword(String confirmPassword) {
-		this.confirmPassword = confirmPassword;
-	}
-
-	public int getAge() {
+	public String getAge() {
 		return age;
 	}
 
-	public void setAge(int age) {
+	public void setAge(String age) {
 		this.age = age;
 	}
 

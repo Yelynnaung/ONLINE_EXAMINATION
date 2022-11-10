@@ -28,11 +28,11 @@ public class ExamResult {
 
 	private String examMin;
 
-	private int durationTime;
+	private String durationTime;
 
-	private int passMark;
+	private String passMark;
 
-	private int marks;
+	private String marks;
 
 	private String passStatus;
 
@@ -40,7 +40,7 @@ public class ExamResult {
 	}
 
 	public ExamResult(int examId, int userId, String userName, String examName, String examDate, String examHour,
-			String examMin, int durationTime, int passMark, int marks, String passStatus) {
+			String examMin, String durationTime, String passMark, String marks, String passStatus) {
 		super();
 		this.examId = examId;
 		this.userId = userId;
@@ -119,12 +119,28 @@ public class ExamResult {
 		this.examMin = examMin;
 	}
 
-	public int getDurationTime() {
+	public String getDurationTime() {
 		return durationTime;
 	}
 
-	public void setDurationTime(int durationTime) {
+	public void setDurationTime(String durationTime) {
 		this.durationTime = durationTime;
+	}
+
+	public String getPassMark() {
+		return passMark;
+	}
+
+	public void setPassMark(String passMark) {
+		this.passMark = passMark;
+	}
+
+	public String getMarks() {
+		return marks;
+	}
+
+	public void setMarks(String marks) {
+		this.marks = marks;
 	}
 
 	public String getPassStatus() {
@@ -133,22 +149,6 @@ public class ExamResult {
 
 	public void setPassStatus(String passStatus) {
 		this.passStatus = passStatus;
-	}
-
-	public int getPassMark() {
-		return passMark;
-	}
-
-	public void setPassMark(int passMark) {
-		this.passMark = passMark;
-	}
-
-	public int getMarks() {
-		return marks;
-	}
-
-	public void setMarks(int marks) {
-		this.marks = marks;
 	}
 
 }

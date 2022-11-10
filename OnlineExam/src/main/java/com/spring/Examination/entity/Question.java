@@ -16,6 +16,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "question")
@@ -25,14 +27,17 @@ public class Question {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@NotEmpty(message = " * Please enter description")
 	@Column(name = "question_description")
 	private String question_description;
 
+	@NotEmpty(message = " * Please enter correct answer")
 	@Column(name = "correct_answer")
 	private String correct_answer;
 
+	@Digits(message = " * Must be 1 or 2 digit number", fraction = 0, integer = 2)
 	@Column(name = "pay_mark")
-	private int pay_mark;
+	private String pay_mark;
 
 	@Column(name = "created_date_time")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -58,7 +63,7 @@ public class Question {
 	public Question() {
 	}
 
-	public Question(String question_description, String correct_answer, int pay_mark, Date createdDateTime,
+	public Question(String question_description, String correct_answer, String pay_mark, Date createdDateTime,
 			Date updatedDateTime) {
 		super();
 		this.question_description = question_description;
@@ -92,11 +97,11 @@ public class Question {
 		this.correct_answer = correct_answer;
 	}
 
-	public int getPay_mark() {
+	public String getPay_mark() {
 		return pay_mark;
 	}
 
-	public void setPay_mark(int pay_mark) {
+	public void setPay_mark(String pay_mark) {
 		this.pay_mark = pay_mark;
 	}
 

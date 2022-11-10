@@ -7,10 +7,12 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,7 +41,11 @@ public class ExamController {
 	}
 
 	@PostMapping("/save")
-	public String save(@ModelAttribute Exam newExam, HttpServletRequest request) throws Exception {
+	public String save(@Valid @ModelAttribute Exam newExam, BindingResult br, HttpServletRequest request,Model model)
+			throws Exception {
+		if (br.hasErrors()) {
+			return "examCreateUpdate";
+		}
 		if (newExam.getId() == 0) {
 			newExam.setCreatedDateTime(new Date());
 			newExam.setUpdatedDateTime(new Date());

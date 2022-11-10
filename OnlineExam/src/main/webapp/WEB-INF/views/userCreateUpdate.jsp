@@ -11,7 +11,7 @@
 	$(function() {
 	  $("#datepicker").datepicker();
 	});
-	
+		
 	function goUserList(){
 		window.location.href = '/user/userList';
 	}
@@ -52,32 +52,29 @@
 		<h1>Create New User</h1>
 	</c:if>
 	
-	<form:form action="/user/save" method="POST" modelAttribute="user" enctype="multipart/form-data">
+	<form:form id="userForm" action="/user/save" method="POST" modelAttribute="user" enctype="multipart/form-data">
 		<form:hidden path="id" id="id"/>
 		<table>
 			<tr>
 				<td align="left" style="padding: 5px 70px 5px 5px;">User Name</td>
-				<td><form:input path="username" /></td>
+				<td><form:input path="username" /><form:errors path="username"  style="color:red;"/></td>
 			</tr>
 			<tr>
 				<td style="padding: 5px 70px 5px 5px;">Email</td>
-				<td><form:input path="email" /></td>
+				<td><form:input path="email" /><form:errors path="email"  style="color:red;"/></td>
+				
 			</tr>
 			<tr>
 				<td style="padding: 5px 70px 5px 5px;">Phone</td>
-				<td><form:input path="phone" /></td>
+				<td><form:input path="phone" /><form:errors path="phone"  style="color:red;"/></td>
 			</tr>
 			<tr>
 				<td style="padding: 5px 70px 5px 5px;">Password</td>
-				<td><form:password path="password" /></td>
-			</tr>
-			<tr>
-				<td style="padding: 5px 70px 5px 5px;">Confirm Password</td>
-				<td><form:password path="confirmPassword" /></td>
+				<td><form:password path="password" id="password"/><form:errors path="password"  style="color:red;"/></td>
 			</tr>
 			<tr>
 				<td style="padding: 5px 70px 5px 5px;">Age</td>
-				<td><form:input path="age" /></td>
+				<td><form:input path="age" /><form:errors path="age"  style="color:red;"/></td>
 			</tr>
 			<tr>
 				<td style="padding: 5px 70px 5px 5px;">Gender</td>
@@ -90,11 +87,11 @@
 			</tr>
 			<tr>
 				<td style="padding: 5px 70px 5px 5px;">DOB</td>
-				<td><form:input id="datepicker" path="dob" /></td>
+				<td><form:input id="datepicker" path="dob" /><form:errors path="dob"  style="color:red;"/></td>
 			</tr>
 			<tr>
 				<td style="padding: 5px 70px 5px 5px;">Address</td>
-				<td><form:textarea path="address" /></td>
+				<td><form:textarea path="address" /><form:errors path="address" style="color:red;"/></td>
 			</tr>
 			<tr>
 				<td style="padding: 5px 70px 5px 5px;">Role</td>
@@ -106,7 +103,7 @@
 			</tr>
 			<tr>
 				<td style="padding: 5px 70px 5px 5px;">Photo</td>
-				<td><input type="file" name="image" accept="image/png, image/jpeg" /> </td>
+				<td><input type="file" name="image" accept="image/png, image/jpeg" /><form:errors path="photo" /></td>
 			</tr>
 			<tr>
 			<c:if test="${user.id > 0 }">
@@ -119,7 +116,7 @@
 					<input type="button" value="Cancel" onclick="goUserList();"/>
 				</td>
 			</c:if>
-				<td  style="padding-top: 10px;"><input type="submit" value="Save" /></td>
+				<td  style="padding-top: 10px;"><input type="submit" value="Save"/></td>
 			</tr>
 		</table>
 	</form:form>

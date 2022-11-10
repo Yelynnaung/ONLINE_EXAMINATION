@@ -51,26 +51,32 @@
 				<tr>
 					<td align="left" style="padding: 5px 70px 5px 5px;">Examination Name</td>
 					<td><form:input path="examName" /></td>
+					<td><form:errors path="examName" style="color:red;"/></td>
 				</tr>
 				<tr>
 					<td style="padding: 5px 70px 5px 5px;">Examination Date</td>
 					<td><form:input path="examDate" id="datepicker"/></td>
+					<td><form:errors path="examDate" style="color:red;"/></td>
 				</tr>
 				<tr>
 					<td style="padding: 5px 70px 5px 5px;">Start Hour</td>
-					<td><form:input path="examHour" />*(24 Hours)</td>
+					<td><form:input path="examHour" /></td>
+					<td><form:errors path="examHour" style="color:red;"/><span style="color:red;">${examHourError }</span></td>
 				</tr>
 				<tr>
 					<td style="padding: 5px 70px 5px 5px;">Start Minute</td>
-					<td><form:input path="examMinute" />*(60 Mins)</td>
+					<td><form:input path="examMinute" /></td>
+					<td><form:errors path="examMinute" style="color:red;"/><span style="color:red;">${examMinuteError }</span></td>
 				</tr>
 				<tr>
 					<td style="padding: 5px 70px 5px 5px;">Duration Time</td>
-					<td><form:input path="durationTime" />*(Total Mins)</td>
+					<td><form:input path="durationTime" /></td>
+					<td><form:errors path="durationTime" style="color:red;"/></td>
 				</tr>
 				<tr>
 					<td style="padding: 5px 70px 5px 5px;">Pass Mark</td>
 					<td><form:input path="passMark" /></td>
+					<td><form:errors path="passMark" style="color:red;"/></td>
 				</tr>
 				<tr>
 					<td align="right"  style="padding-top: 10px;"> 

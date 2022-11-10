@@ -4,10 +4,12 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -96,8 +98,13 @@ public class ExamQuestionController {
 	 * Save question detail for selected examId and questionId
 	 */
 	@PostMapping("/save")
-	public String saveOrupdate(@ModelAttribute Question newQuestion, HttpServletRequest request) {
+	public String saveOrupdate(@Valid @ModelAttribute Question newQuestion,BindingResult br, HttpServletRequest request,Model model) {
 		String examId = request.getParameter("examId");
+		
+		if(br.hasErrors()) {
+			model.addAttribute("examId", examId);
+			return "createUpdateQuestion";
+		}
 		if (newQuestion.getId() == 0) {
 			Exam exam = examService.getExamById(Integer.parseInt(examId));
 			newQuestion.getAnswers().add(new Answer(newQuestion.getAnswer1()));
@@ -133,10 +140,10 @@ public class ExamQuestionController {
 	public String question(@PathVariable("examId") int examId, Model model) {
 		Date date = new Date();
 		Exam exam = examService.getExamById(examId);
-		int startTime = (Integer.parseInt(exam.getExamHour()) * 60) + Integer.parseInt(exam.getExamMinute());
+		int startTime = (Integer.parseInt(exam.getExamHour()) * 60) + (Integer.parseInt(exam.getExamMinute()));
 		int currentTime = (date.getHours() * 60) + date.getMinutes();
 		int spendTime = currentTime - startTime;
-		int durationMins = exam.getDurationTime();
+		int durationMins = Integer.parseInt(exam.getDurationTime());
 		int remainingMins = durationMins - spendTime;
 
 		int hour = remainingMins / 60;
@@ -161,7 +168,7 @@ public class ExamQuestionController {
 					String selectedAnswer = request.getParameter("answerForQuestionId_" + qId).toString();
 					String correctAnswer = question.getCorrect_answer();
 					if (selectedAnswer.equals(correctAnswer)) {
-						mark += question.getPay_mark();
+						mark += Integer.parseInt(question.getPay_mark());
 					}
 				}
 			}
@@ -180,12 +187,14 @@ public class ExamQuestionController {
 			}
 		}
 		String passStatus = "Fail";
-		if (mark >= exam.getPassMark()) {
+		int passMark = Integer.parseInt(exam.getPassMark());
+		if (mark >= passMark) {
 			passStatus = "Pass";
 		}
 		examResultService.save(new ExamResult(examId, userId, user.getUsername(), exam.getExamName(),
-				exam.getExamDate(),exam.getExamHour(),exam.getExamMinute(), exam.getDurationTime(), exam.getPassMark(), mark, passStatus));
-		
+				exam.getExamDate(), exam.getExamHour(), exam.getExamMinute(), exam.getDurationTime(),
+				exam.getPassMark(), Integer.toString(mark), passStatus));
+
 		return "redirect:/user/";
 	}
 

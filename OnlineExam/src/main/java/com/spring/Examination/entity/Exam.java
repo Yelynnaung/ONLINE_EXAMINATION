@@ -17,6 +17,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "exam")
@@ -26,23 +30,33 @@ public class Exam {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@NotEmpty(message = " * Please enter exam name")
 	@Column(name = "exam_name")
 	private String examName;
 
+	@NotEmpty(message = " * Please enter exam date")
 	@Column(name = "exam_date")
 	private String examDate;
 
+	@Digits(message = " * Must be 1 or 2 digit number", fraction = 0, integer = 2)
+	@Min(value = 1, message = "Must be equal or greater than 1")
+	@Max(value = 23, message = "Must be equal or less than 23")
 	@Column(name = "exam_hour")
 	private String examHour;
 
+	@Digits(message = " * Must be 1 or 3 digit number", fraction = 0, integer = 2)
+	@Min(value = 0, message = "Must be equal or greater than 0")
+	@Max(value = 59, message = "Must be equal or less than 59")
 	@Column(name = "exam_minute")
 	private String examMinute;
 
+	@Digits(message = " * Must be 1 or 3 digit number", fraction = 0, integer = 3)
 	@Column(name = "duration_time")
-	private int durationTime;
+	private String durationTime;
 
+	@Digits(message = " * Must be 1 or 3 digit", fraction = 1, integer = 3)
 	@Column(name = "pass_mark")
-	private int passMark;
+	private String passMark;
 
 	@Column(name = "created_date_time")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -64,8 +78,8 @@ public class Exam {
 	public Exam() {
 	}
 
-	public Exam(String examName, String examDate, String examHour, String examMinute, int durationTime, int passMark,
-			Date createdDateTime, Date updatedDateTime) {
+	public Exam(String examName, String examDate, String examHour, String examMinute, String durationTime,
+			String passMark, Date createdDateTime, Date updatedDateTime) {
 		super();
 		this.examName = examName;
 		this.examDate = examDate;
@@ -117,19 +131,19 @@ public class Exam {
 		this.examMinute = examMinute;
 	}
 
-	public int getDurationTime() {
+	public String getDurationTime() {
 		return durationTime;
 	}
 
-	public void setDurationTime(int durationTime) {
+	public void setDurationTime(String durationTime) {
 		this.durationTime = durationTime;
 	}
 
-	public int getPassMark() {
+	public String getPassMark() {
 		return passMark;
 	}
 
-	public void setPassMark(int passMark) {
+	public void setPassMark(String passMark) {
 		this.passMark = passMark;
 	}
 

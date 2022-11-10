@@ -36,7 +36,7 @@
 		<table>
 			<tr>
 				<td>Question</td>
-				<td><form:input path="question_description" /></td>
+				<td><form:input path="question_description" /><form:errors path="question_description"  style="color:red;"/>   </td>
 			</tr>
 			
 			<tr>
@@ -57,11 +57,11 @@
 			</tr>
 			<tr>
 				<td>Correct Answer</td>
-				<td><form:input path="correct_answer" /></td>
+				<td><form:input path="correct_answer" /><form:errors path="correct_answer"  style="color:red;"/></td>
 			</tr>
 			<tr>
 				<td>Pay Mark</td>
-				<td><form:input path="pay_mark" /></td>
+				<td><form:input path="pay_mark" /><form:errors path="pay_mark"  style="color:red;"/></td>
 			</tr>
 			<tr>
 				<td colspan="2" align="center">
