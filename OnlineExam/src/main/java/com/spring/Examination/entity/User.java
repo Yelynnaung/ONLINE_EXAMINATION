@@ -52,10 +52,6 @@ public class User {
 	@Column(name = "gender")
 	private String gender;
 
-	@NotEmpty(message = " * Please enter dob")
-	@Column(name = "dob")
-	private String dob;
-
 	@NotEmpty(message = " * Please enter address")
 	@Size(max = 100, message = "No more than 100 character")
 	@Column(name = "address")
@@ -82,7 +78,7 @@ public class User {
 	}
 
 	public User(String name, String username, String password, String confirmPassword, String email, String phone,
-			String age, String gender, String dob, String address, String role, String photo, Date createdDateTime,
+			String age, String gender, String address, String role, String photo, Date createdDateTime,
 			Date updatedDateTime) {
 		super();
 		this.username = username;
@@ -91,7 +87,6 @@ public class User {
 		this.phone = phone;
 		this.age = age;
 		this.gender = gender;
-		this.dob = dob;
 		this.address = address;
 		this.role = role;
 		this.photo = photo;
@@ -153,14 +148,6 @@ public class User {
 
 	public void setGender(String gender) {
 		this.gender = gender;
-	}
-
-	public String getDob() {
-		return dob;
-	}
-
-	public void setDob(String dob) {
-		this.dob = dob;
 	}
 
 	public String getAddress() {

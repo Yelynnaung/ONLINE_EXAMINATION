@@ -2,9 +2,26 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
+<html>
 <head>
 <title>Manage Examinee</title>
+<link href="/webjars/bootstrap/5.2.2/css/bootstrap.min.css" rel="stylesheet">
+<script src="/webjars/bootstrap/5.2.2/js/bootstrap.min.js"></script>
+<script src="/webjars/jquery/3.6.0/jquery.min.js"></script>
+<!-- <script src="/js/custom.js"></script>
+<link href="/css/custom.css" rel="stylesheet"> -->
 <script type="text/javascript">
+	function messageBox(message){
+		$("#msg").text(message);
+		 $("#msg").fadeIn("slow", function() {
+			    setTimeout(function() {
+			      $("#msg").fadeOut("slow");
+			    }, 3000);
+			  });
+	}
+	function back(){
+		window.location.href = "/exam/examList"
+	}
 	function add() {
 		var selectedAddUserIds = document.getElementsByName('selectedAddUserIds');
 		var checked = false;
@@ -37,98 +54,107 @@
 </script>
 </head>
 <body>
-	<div align="center">
-	<u><h1>Online Examination System</h1></u>
+<!-- navigation -->
+<nav class="navbar navbar-dark bg-dark">
+	<div class="container-fluid">
+		 <h1 class="navbar-brand" >Online Examination System</h1>		 
+           <div class="navbar-nav"  style="padding-right: 100px;">
+		          <a class="nav-link active" href="/adminHome">Home</a>
+		    </div>
+	 </div>	 
+</nav>
+<div class="container">	
 		<c:if test="${not empty message }">
-			<div
-				style="background-color: green; color: white; width: 300px; padding: 10px;">${message }</div>
+			<br/>	
+			<div class="alert alert-info" role="alert" id="msg">
+				<script>messageBox('${message}');</script>
+			</div>
 		</c:if>
 		<c:remove var="message" scope="session" />
-
-		<div>
-			<h3>
-				<a href="/adminHome">Home</a> / <a href="/exam/examList">Exam Management</a> / Assign Examinees
-			</h3>
-		</div>
-
+	
 		<h1>
-			Assign Examinees For " ${exam.examName } " Exam
-		</h1>
-		<input type="hidden" value="${user.id }" id="id">
-		<table>
-			<tr>
-				<th align="left" style="padding: 5px 100px 5px 5px;">Exam Name</th>
-				<td><i>${exam.examName }</i></td>
-			</tr>
-			<tr>
-				<th align="left" style="padding: 5px;">Exam Date</th>
-				<td><i>${exam.examDate }</i></td>
-			</tr>
-			<tr>
-				<th align="left" style="padding: 5px;">Total Examinees</th>
-				<td><i>${exam.users.size() }</i></td>
-			</tr>
-		</table>
-		<br>
-
-		<u><h3>Already Added</h3></u>
-		<c:if test="${empty addedUsers }">
-			<i>No Records</i>
-		</c:if>
-		<c:if test="${not empty addedUsers }">
-			<form:form id="removeForm" action="/exam/removeExaminees"
-				method="POST">
-				<input type="hidden" name="examId" value="${exam.id }" />
-				<table border="1">
-					<tr>
-						<th>No</th>
-						<th style="padding: 5px 10px 5px 10px;" align="center">Username</th>
-						<th style="padding: 5px 10px 5px 10px;" align="center">Email</th>
-						<th style="padding: 5px 10px 5px 10px;" align="center">Phone</th>
-						<th style="padding: 5px 10px 5px 10px;"><input type="button" value="Remove" onclick="remove();"></th>
-					</tr>
-					<c:forEach var="user" items="${addedUsers }" varStatus="status">
+			Assign Examinees For "<u> ${exam.examName } </u>" Exam
+		</h1>	
+		<div>
+		<input type="button" value="Back" onclick="back();" class="btn btn-secondary">
+		</div><br/>
+		<div class="form-control" style="padding: 20px 0px 20px 20px">
+				<input type="hidden" value="${user.id }" id="id">
+				<div class="input-group mb-3">
+				    <div class="col-3 form-label"><b>Exam Name</b></div>
+				    <div class="col-4 "><i>${exam.examName }</i></div>
+				 </div>
+				<div class="input-group mb-3">
+				    <div class="col-3 form-label"><b>Exam Date</b></div>
+				    <div class="col-4 "><i>${exam.examDate }</i></div>
+				 </div>
+				 <div class="input-group mb-3">
+				    <div class="col-3 form-label"><b>Total Examinees</b></div>
+				    <div class="col-4 "><i>${exam.users.size() }</i></div>
+				 </div>
+				<br>
+		
+				<div class="form-control">
+					<h3>Already Added</h3>
+					<c:if test="${empty addedUsers }">
+						<i>No Records</i>
+					</c:if>
+					<c:if test="${not empty addedUsers }">
+						<form:form id="removeForm" action="/exam/removeExaminees"
+							method="POST">
+							<input type="hidden" name="examId" value="${exam.id }" />
+							<table class="table table-bordered">
+								<tr>
+									<th>No</th>
+									<th>Username</th>
+									<th>Email</th>
+									<th>Phone</th>
+									<th><input type="button" value="Remove" onclick="remove();" class="btn btn-primary"></th>
+								</tr>
+								<c:forEach var="user" items="${addedUsers }" varStatus="status">
+									<tr>
+										<td>${status.index+1 }</td>
+										<td>${user.username }</td>
+										<td>${user.email }</td>
+										<td>${user.phone }</td>
+										<td><input type="checkbox" name="selectedRemoveUserIds" value="${user.id }" class="form-check-input" ></td>
+									</tr>
+								</c:forEach>
+							</table>
+						</form:form>
+					</c:if>
+				</div>
+				<br/>
+		</div><br/>
+		<div class="form-control">
+			<h3>Remaining</h3>
+			<c:if test="${empty userList }">
+				<i>No Records</i>
+			</c:if>
+			<c:if test="${not empty userList }">
+				<form:form id="addForm" action="/exam/addExaminees" method="POST">
+					<input type="hidden" name="examId" value="${exam.id }" />
+					<table class="table table-bordered">
 						<tr>
-							<td>${status.index+1 }</td>
-							<td>${user.username }</td>
-							<td>${user.email }</td>
-							<td>${user.phone }</td>
-							<td align="center"><input type="checkbox" name="selectedRemoveUserIds" value="${user.id }"></td>
+							<th>No</th>
+							<th>Username</th>
+							<th>Email</th>
+							<th>Phone</th>
+							<th><input type="button" value="Add" onclick="add();" class="btn btn-primary"></th>
 						</tr>
-					</c:forEach>
-				</table>
-			</form:form>
-		</c:if>
-
-		<br/><span>________________________________________________________</span><br>
-		<u><h3>New Examinee</h3></u>
-		<c:if test="${empty userList }">
-			<i>No Records</i>
-		</c:if>
-		<c:if test="${not empty userList }">
-			<form:form id="addForm" action="/exam/addExaminees" method="POST">
-				<input type="hidden" name="examId" value="${exam.id }" />
-				<table border="1">
-					<tr>
-						<th>No</th>
-						<th style="padding: 5px 10px 5px 10px;" align="center">Username</th>
-						<th style="padding: 5px 10px 5px 10px;" align="center">Email</th>
-						<th style="padding: 5px 10px 5px 10px;" align="center">Phone</th>
-						<th style="padding: 5px 10px 5px 10px;"><input type="button" value="Add" onclick="add();"></th>
-					</tr>
-					<c:forEach var="user" items="${userList }" varStatus="status">
-						<tr>
-							<td>${status.index+1 }</td>
-							<td>${user.username }</td>
-							<td>${user.email }</td>
-							<td>${user.phone }</td>
-							<td align="center"><input type="checkbox" name="selectedAddUserIds" value="${user.id }"></td>
-						</tr>
-					</c:forEach>
-				</table>
-			</form:form>
-		</c:if>
-
+						<c:forEach var="user" items="${userList }" varStatus="status">
+							<tr>
+								<td>${status.index+1 }</td>
+								<td>${user.username }</td>
+								<td>${user.email }</td>
+								<td>${user.phone }</td>
+								<td><input type="checkbox" name="selectedAddUserIds" value="${user.id }" class="form-check-input" ></td>
+							</tr>
+						</c:forEach>
+					</table>
+				</form:form>
+			</c:if>
+		</div>
 	</div>
 </body>
 </html>

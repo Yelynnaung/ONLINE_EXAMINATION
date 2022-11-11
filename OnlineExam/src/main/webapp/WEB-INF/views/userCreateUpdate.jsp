@@ -2,11 +2,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
+<html>
 <head>
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
+<c:if test="${user.id > 0 }">
+<title>Edit User</title>
+</c:if>
+<c:if test="${user.id == 0 }">			
+<title>Create User</title>
+</c:if>
+<link href="/webjars/bootstrap/5.2.2/css/bootstrap.min.css" rel="stylesheet">
+<script src="/webjars/bootstrap/5.2.2/js/bootstrap.min.js"></script>
+<script src="/webjars/jquery/3.6.0/jquery.min.js"></script>
+<!-- <script src="/js/custom.js"></script>
+<link href="/css/custom.css" rel="stylesheet"> -->
 <script>
 	$(function() {
 	  $("#datepicker").datepicker();
@@ -20,16 +28,18 @@
 		window.location.href = '/user/detail/'+id;
 	}
 </script>
-<c:if test="${user.id > 0 }">
-		<title>Edit User</title>
-	</c:if>
-	<c:if test="${user.id == 0 }">			
-		<title>Create User</title>
-	</c:if>
 </head>
 <body>
-<div align="center">
-<u><h1>Online Examination System</h1></u>
+<!-- navigation -->
+<nav class="navbar navbar-dark bg-dark">
+	<div class="container-fluid">
+		 <h1 class="navbar-brand" >Online Examination System</h1>		 
+           <div class="navbar-nav"  style="padding-right: 100px;">
+		          <a class="nav-link active" href="/adminHome">Home</a>
+		    </div>
+	 </div>	 
+</nav>
+<div class="container">
 	<c:if test="${not empty message }">
 		<div
 			style="background-color: green; color: white; padding: 10px; width: 400px;">
@@ -37,89 +47,104 @@
 		</div>
 	</c:if>
 	<c:remove var="message" scope="session" />
-
 	
 	<c:if test="${user.id > 0 }">
-		<div>
-			<h3><a href="/adminHome">Home</a> / <a href="/user/userList">User Management</a> / <a href="/user/detail/${user.id}">Detail</a> / Edit User <br></h3>
-		</div>	
-		<h1>Edit User Information</h1>
+		<br/><h1>Edit User Information</h1>
 	</c:if>
-	<c:if test="${user.id == 0 }">	
-		<div>
-			<h3><a href="/home">Home</a> / <a href="/user/userList">User Management</a> / Create User <br></h3>
-		</div>		
-		<h1>Create New User</h1>
+	<c:if test="${user.id == 0 }">		
+		<br/><h1>Create New User</h1>
 	</c:if>
 	
+	<div class="form-control" style="padding: 20px 0px 20px 30px;">
 	<form:form id="userForm" action="/user/save" method="POST" modelAttribute="user" enctype="multipart/form-data">
 		<form:hidden path="id" id="id"/>
-		<table>
-			<tr>
-				<td align="left" style="padding: 5px 70px 5px 5px;">User Name</td>
-				<td><form:input path="username" /><form:errors path="username"  style="color:red;"/></td>
-			</tr>
-			<tr>
-				<td style="padding: 5px 70px 5px 5px;">Email</td>
-				<td><form:input path="email" /><form:errors path="email"  style="color:red;"/></td>
-				
-			</tr>
-			<tr>
-				<td style="padding: 5px 70px 5px 5px;">Phone</td>
-				<td><form:input path="phone" /><form:errors path="phone"  style="color:red;"/></td>
-			</tr>
-			<tr>
-				<td style="padding: 5px 70px 5px 5px;">Password</td>
-				<td><form:password path="password" id="password"/><form:errors path="password"  style="color:red;"/></td>
-			</tr>
-			<tr>
-				<td style="padding: 5px 70px 5px 5px;">Age</td>
-				<td><form:input path="age" /><form:errors path="age"  style="color:red;"/></td>
-			</tr>
-			<tr>
-				<td style="padding: 5px 70px 5px 5px;">Gender</td>
-				<td>
-					<form:select path="gender">
+		<div class="input-group mb-3">
+		    <div class="col-2 form-label">User Name</div>
+		    <div class="col-4 ">
+		    	<form:input class="form-control" path="username" required="required" />
+		    </div>
+		    <div class="col-6 ">
+		    	<form:errors path="username" style="color:red;"/>
+		    </div>
+		 </div>
+		 <div class="input-group mb-3">
+		    <div class="col-2 form-label">Email</div>
+		    <div class="col-4 ">
+		    	<form:input class="form-control" path="email"  required="required" />
+		    </div>
+		    <div class="col-6 ">
+		    	<form:errors path="email" style="color:red;"/>
+		    </div>
+		 </div>
+		  <div class="input-group mb-3">
+		    <div class="col-2 form-label">Phone</div>
+		    <div class="col-4 ">
+		    	<form:input class="form-control" path="phone"  required="required" />
+		    </div>
+		    <div class="col-6 ">
+		    	<form:errors path="phone" style="color:red;"/>
+		    </div>
+		 </div>
+		  <div class="input-group mb-3">
+		    <div class="col-2 form-label">Password</div>
+		    <div class="col-4 ">
+		    	<form:password class="form-control" path="password"  required="required" />
+		    </div>
+		    <div class="col-6 ">
+		    	<form:errors path="password" style="color:red;"/>
+		    </div>
+		 </div>
+		  <div class="input-group mb-3">
+		    <div class="col-2 form-label">Age</div>
+		    <div class="col-4 ">
+		    	<form:input class="form-control" path="age"  required="required" />
+		    </div>
+		    <div class="col-6 ">
+		    	<form:errors path="age" style="color:red;"/>
+		    </div>
+		 </div>
+		 <div class="input-group mb-3">
+		    <div class="col-2 form-label">Gender</div>
+		    <div class="col-4 ">
+		    	<form:select class="form-select" path="gender">
 						<form:option value="Male" label="Male"></form:option>
 						<form:option value="Female" label="Female"></form:option>
-					</form:select>
-				</td>
-			</tr>
-			<tr>
-				<td style="padding: 5px 70px 5px 5px;">DOB</td>
-				<td><form:input id="datepicker" path="dob" /><form:errors path="dob"  style="color:red;"/></td>
-			</tr>
-			<tr>
-				<td style="padding: 5px 70px 5px 5px;">Address</td>
-				<td><form:textarea path="address" /><form:errors path="address" style="color:red;"/></td>
-			</tr>
-			<tr>
-				<td style="padding: 5px 70px 5px 5px;">Role</td>
-				<td>
-					<form:select path="role" class="form-control">
+				</form:select>
+		    </div>
+		 </div>
+		 <div class="input-group mb-3">
+		    <div class="col-2 form-label">Address</div>
+		    <div class="col-4 ">
+		    	<form:textarea class="form-control" path="address"  required="required" />
+		    </div>
+		    <div class="col-6 ">
+		    	<form:errors path="address" style="color:red;"/>
+		    </div>
+		 </div>
+		  <div class="input-group mb-3">
+		    <div class="col-2 form-label">Role</div>
+		    <div class="col-4 ">
+		    	<form:select path="role"  class="form-select">
 					   <form:options items="${roles}" />
-					</form:select>
-				</td>
-			</tr>
-			<tr>
-				<td style="padding: 5px 70px 5px 5px;">Photo</td>
-				<td><input type="file" name="image" accept="image/png, image/jpeg" /><form:errors path="photo" /></td>
-			</tr>
-			<tr>
-			<c:if test="${user.id > 0 }">
-				<td align="right"  style="padding-top: 10px;"> 
-					<input type="button" value="Cancel" onclick="goDetail();"/>
-				</td>
-			</c:if>
-			<c:if test="${user.id == 0 }">
-				<td align="right"  style="padding-top: 10px;"> 
-					<input type="button" value="Cancel" onclick="goUserList();"/>
-				</td>
-			</c:if>
-				<td  style="padding-top: 10px;"><input type="submit" value="Save"/></td>
-			</tr>
-		</table>
+				</form:select>
+		    </div>
+		 </div>
+		  <div class="input-group mb-3">
+		    <div class="col-2 form-label">Photo</div>
+		    <div class="col-4 ">
+		    	<input type="file" name="image" accept="image/png, image/jpeg" class="form-control"  required="required" />
+		    </div>
+		 </div>
+		  <div class="input-group mb-3">
+		    <div class="col-2 form-label"></div>
+		    <div class="col-2 ">
+		    	<c:if test="${user.id > 0 }"><input type="button" value="Cancel" onclick="goDetail();" class="btn btn-secondary"/></c:if>
+		    	<c:if test="${user.id == 0 }"><input type="button" value="Cancel" onclick="goUserList();" class="btn btn-secondary"/></c:if>
+		    	<input type="submit" value="Save" class="btn btn-primary"/>
+		  </div>
+		 </div>
 	</form:form>
+	</div>
 </div>
 </body>
 </html>

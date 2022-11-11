@@ -2,7 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
+<html>
 <head>
+<link href="/webjars/bootstrap/5.2.2/css/bootstrap.min.css" rel="stylesheet">
+<script src="/webjars/bootstrap/5.2.2/js/bootstrap.min.js"></script>
+<script src="/webjars/jquery/3.6.0/jquery.min.js"></script>
+<!-- <script src="/js/custom.js"></script>
+<link href="/css/custom.css" rel="stylesheet"> -->
 <meta charset="ISO-8859-1">
 	<c:if test="${question.id == 0}">
 		<title>Create Question</title>
@@ -20,57 +26,93 @@
 
 </head>
 <body>
-<div align="center">	
-	<u><h1>Online Examination System</h1></u>
-	<c:if test="${question.id == 0}">
-		<h3><a href="/adminHome">Home</a> / <a href="/exam/examList">Exam Management</a> / <a href="/examQuestion/${examId}">Questions</a> / Create New Question</h3>
+<!-- navigation -->
+<nav class="navbar navbar-dark bg-dark">
+	<div class="container-fluid">
+		 <h1 class="navbar-brand" >Online Examination System</h1>		 
+           <div class="navbar-nav"  style="padding-right: 100px;">
+		          <a class="nav-link active" href="/adminHome">Home</a>
+		    </div>
+	 </div>	 
+</nav><br/>
+<div class="container">
+	<c:if test="${question.id == 0}">		
 		<h1>Create New Question</h1>
 	</c:if>
 	<c:if test="${question.id > 0}">
-	<h3><a href="/adminHome">Home</a> / <a href="/exam/examList">Exam Management</a> / <a href="/examQuestion/${examId}">Questions</a> / Edit Question</h3>
 		<h1>Edit Question</h1>
 	</c:if>
-	<form:form action="/examQuestion/save" method="POST" modelAttribute="question">
-		<input type="hidden" name="examId" value="${examId}"/>
-		<form:hidden path="id" />
-		<table>
-			<tr>
-				<td>Question</td>
-				<td><form:input path="question_description" /><form:errors path="question_description"  style="color:red;"/>   </td>
-			</tr>
-			
-			<tr>
-				<td>Answer 1</td>
-				<td><form:input path="answer1" /></td>
-			</tr>
-			<tr>
-				<td>Answer 2</td>
-				<td><form:input path="answer2" /></td>
-			</tr>
-			<tr>
-				<td>Answer 3</td>
-				<td><form:input path="answer3" /></td>
-			</tr>
-			<tr>
-				<td>Answer 4</td>
-				<td><form:input path="answer4" /></td>
-			</tr>
-			<tr>
-				<td>Correct Answer</td>
-				<td><form:input path="correct_answer" /><form:errors path="correct_answer"  style="color:red;"/></td>
-			</tr>
-			<tr>
-				<td>Pay Mark</td>
-				<td><form:input path="pay_mark" /><form:errors path="pay_mark"  style="color:red;"/></td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center">
-				<input type="button" value="Cancel" onclick="back();"/>
-				<input type="submit" value="Save"/>
-				</td>
-			</tr>
-		</table>
-	</form:form>
+
+	<div class="form-control" style="padding: 20px 0px 20px 20px">	
+		<form:form action="/examQuestion/save" method="POST" modelAttribute="question">
+			<input type="hidden" name="examId" value="${examId}"/>
+			<form:hidden path="id" />
+			<div class="input-group mb-3">
+				<div class="col-2 form-label">Question Description</div>
+				<div class="col-4 ">
+					<form:textarea class="form-control" path="question_description" required="required" />
+				</div>
+				<div class="col-6 ">
+					 <form:errors path="question_description" style="color:red;"/>
+				</div>
+			</div>
+			<div class="input-group mb-3">
+				<div class="col-2 form-label">Answer 1</div>
+				<div class="col-4 ">
+					<form:input class="form-control" path="answer1" required="required" />
+				</div>
+				<div class="col-6 ">
+					 <form:errors path="answer1" style="color:red;"/>
+				</div>
+			</div>
+			<div class="input-group mb-3">
+				<div class="col-2 form-label">Answer 2</div>
+				<div class="col-4 ">
+					<form:input class="form-control" path="answer2" required="required" />
+				</div>
+				<div class="col-6 ">
+					 <form:errors path="answer2" style="color:red;"/>
+				</div>
+			</div>
+			<div class="input-group mb-3">
+				<div class="col-2 form-label">Answer 3</div>
+				<div class="col-4 ">
+					<form:input class="form-control" path="answer3"/>
+				</div>
+			</div>
+			<div class="input-group mb-3">
+				<div class="col-2 form-label">Answer 4</div>
+				<div class="col-4 ">
+					<form:input class="form-control" path="answer4"/>
+				</div>
+			</div>
+			<div class="input-group mb-3">
+				<div class="col-2 form-label">Correct Answer</div>
+				<div class="col-4 ">
+					<form:input class="form-control" path="correct_answer" required="required" />
+				</div>
+				<div class="col-6 ">
+					 <form:errors path="correct_answer" style="color:red;"/>
+				</div>
+			</div>
+			<div class="input-group mb-3">
+				<div class="col-2 form-label">Pay Mark</div>
+				<div class="col-4 ">
+					<form:input class="form-control" path="pay_mark" required="required" />
+				</div>
+				<div class="col-6 ">
+					 <form:errors path="pay_mark" style="color:red;"/>
+				</div>
+			</div>
+			 <div class="input-group mb-3">
+				<div class="col-2 form-label"></div>
+				<div class="col-2 ">
+					<input type="button" value="Cancel" onclick="back();" class="btn btn-secondary"/>
+					<input type="submit" value="Save" class="btn btn-primary"/>
+				</div>
+			 </div>		
+		</form:form>
+	</div>
 </div>
 </body>
 </html>

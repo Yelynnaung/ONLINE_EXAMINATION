@@ -2,7 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
+<html>
 <head>
+<link href="/webjars/bootstrap/5.2.2/css/bootstrap.min.css" rel="stylesheet">
+<script src="/webjars/bootstrap/5.2.2/js/bootstrap.min.js"></script>
+<script src="/webjars/jquery/3.6.0/jquery.min.js"></script>
+<!-- <script src="/js/custom.js"></script>
+<link href="/css/custom.css" rel="stylesheet"> -->
 <title>Examination</title>
 <script type="text/javascript">
 	function gotoExam(id) {
@@ -44,24 +50,34 @@
 </script>
 </head>
 <body>
-<div align="center">
-		<u><h1>Online Examination System</h1></u>
-		<h3><a href="/user/">Home</a> / Exam List</h3>
-		<h2>Hello ${loginUser.username }</h2>
+<!-- navigation -->
+<nav class="navbar navbar-dark bg-dark">
+	<div class="container-fluid">
+		 <h1 class="navbar-brand" >Online Examination System</h1>		 
+           <div class="navbar-nav"  style="padding-right: 100px;">
+		       <span class="nav-link active" style="padding-right: 100px;">User : ${loginUser.username}</span>
+		    </div>
+	 </div>	 
+</nav>
+<div class="container">
+<h1>Exam List</h1><br/>
+<div>
+	<a href="/user/" class="btn btn-secondary">Back</a>
+</div><br/>
+<div class="form-control">
 		<c:if test="${loginUser.exams.size() == 0 }">
 			You have no exam yet !
 		</c:if>
 		<c:if test="${examList.size() > 0 }">
-			You have <b>${examList.size()}</b> exam.<br />
-			<br />
-			<table border="1">
+			You have <b>${examList.size()}</b> exam.<br /><br />
+			<table class="table table-bordered">
 				<tr>
 					<th>ID</th>
-					<th style="padding: 5px 10px 5px 10px;">Examination Name</th>
-					<th style="padding: 5px 10px 5px 10px;">Examination DateTime</th>
-					<th style="padding: 5px 10px 5px 10px;" align="center">Duration
+					<th>Examination Name</th>
+					<th>Examination DateTime</th>
+					<th>Duration
 						Time</th>
-					<th style="padding: 5px 10px 5px 10px;">Action</th>
+					<th>Action</th>
 				</tr>
 				<c:forEach var="exam" items="${examList }" varStatus="status">
 					<tr>
@@ -70,7 +86,7 @@
 						<td>${exam.examDate }&nbsp;&nbsp;${exam.examHour }H: ${exam.examMinute }M</td>
 						<td>${exam.durationTime }Mins</td>
 						<td><input type="button" value="" id="${exam.id}"
-							onclick="gotoExam(${exam.id});" /></td>
+							onclick="gotoExam(${exam.id});"  class="btn btn-primary"/></td>
 						<script>
 							var res = checkDate('${exam.id}',
 									'${exam.examDate}', ${exam.examHour},
@@ -82,5 +98,6 @@
 			</table>
 		</c:if>
 	</div>
+</div>
 </body>
 </html>
