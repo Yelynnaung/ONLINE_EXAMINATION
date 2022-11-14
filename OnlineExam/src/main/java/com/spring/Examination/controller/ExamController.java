@@ -103,7 +103,7 @@ public class ExamController {
 	public String addUsersForExam(@PathVariable int examId, Model model) {
 
 		Exam exam = examService.getExamById(examId);
-		List<User> userList = userService.getAllUsers();
+		List<User> userList = userService.getByRole("User");
 		if (exam.getUsers().size() > 0) {
 			userList.removeAll(exam.getUsers());
 		}

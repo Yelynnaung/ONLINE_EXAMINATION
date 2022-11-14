@@ -89,7 +89,7 @@
 
 	<h1>Exam Management</h1><br/>
 	<input type="button" value="Add New Exam" onclick="createExam();" class="btn btn-primary">
-	<input type="button" value="View Exam Results" onclick="examResult();" class="btn btn-outline-secondary">
+	<input type="button" value="View Exam History" onclick="examResult();" class="btn btn-outline-secondary">
 	<br/><br/>
 		
 	<form:form class="row g-3 col-6" action="/exam/search" method="POST" modelAttribute="exam">

@@ -32,7 +32,7 @@
 	 </div>	 
 </nav>
 
-<div class="container"><h1>All Exam Results</h1>
+<div class="container"><h1>All Exam Result History</h1>
 <br/>
 <div>
   <input type="button" value="Back" onclick="back();" class="btn btn-secondary">

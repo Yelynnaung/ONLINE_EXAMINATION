@@ -70,8 +70,8 @@ function countDown() {
 	<ol>
 		<c:forEach var="question" items="${questions}">
 			<li>
-				<input type="hidden" name="questionId" value="${question.id }"><br/>
-				${question.question_description }
+				<input type="hidden" name="questionId" value="${question.id }">
+				${question.question_description }<br/>
 				
 					<c:forEach var="answer" items="${question.answers }">
 						<c:if test="${!empty answer.answer_description}">

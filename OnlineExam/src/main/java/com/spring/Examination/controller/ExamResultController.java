@@ -1,19 +1,18 @@
 package com.spring.Examination.controller;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -74,18 +73,20 @@ public class ExamResultController {
 
 	@SuppressWarnings("unchecked")
 	@GetMapping("/exportPDF")
-	public ResponseEntity<byte[]> exportPDF(HttpSession session) throws FileNotFoundException, JRException {
+	public void exportPDF(HttpSession session , HttpServletResponse response) throws JRException, IOException {
 		List<ExamResult> examResultList = (List<ExamResult>) session.getAttribute("examResultList");
+		//param
 		HashMap<String, Object> params = new HashMap<String, Object	>();
-		params.put("title", "My Report");
-		
+		params.put("title", "Exam Report");
+		//cds
 		JRBeanCollectionDataSource cds = new JRBeanCollectionDataSource(examResultList);
+		//Jprint
 		JasperReport jasperReport =  JasperCompileManager.compileReport(new FileInputStream("src/main/resources/exam_report.jrxml"));
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params ,cds);
-		//JasperExportManager.exportReportToPdfFile(jasperPrint, "exam_report.pdf");  
-		byte[] data =  JasperExportManager.exportReportToPdf(jasperPrint);
-		HttpHeaders header = new HttpHeaders();
-		header.set(HttpHeaders.CONTENT_DISPOSITION,"inline;filename=report.pdf");
-		return ResponseEntity.ok().headers(header).contentType(MediaType.APPLICATION_PDF).body(data);
+		//out
+		response.setContentType("application/x-download");
+		response.setHeader("Content-Disposition", String.format("attachent;filename=\"exam_report.pdf\""));		
+		OutputStream out = response.getOutputStream();
+		JasperExportManager.exportReportToPdfStream(jasperPrint, out);  
 	}
 }

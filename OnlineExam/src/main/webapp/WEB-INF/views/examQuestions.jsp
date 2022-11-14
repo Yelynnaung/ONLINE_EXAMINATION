@@ -6,10 +6,19 @@
 <head>
 <title>Exam Questions</title>
 <link href="/webjars/bootstrap/5.2.2/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="/webjars/bootstrap/5.2.2/js/bootstrap.min.js"></script>
 <script src="/webjars/jquery/3.6.0/jquery.min.js"></script>
 <script src="/webjars/jquery/3.6.0/jquery.js"></script>
 <script type="text/javascript">
+function messageBox(message){
+	$("#msg").text(message);
+	 $("#msg").fadeIn("slow", function() {
+		    setTimeout(function() {
+		      $("#msg").fadeOut("slow");
+		    }, 3000);
+		  });
+}
 function back(){
 	window.location.href = "/exam/examList"
 }
@@ -28,6 +37,13 @@ function createQuestion(){
 	 </div>	 
 </nav>
 <div class="container">
+<c:if test="${not empty message }">
+		<br/>	
+		<div class="alert alert-info" role="alert" id="msg">
+			<script>messageBox('${message}');</script>
+		</div>
+	</c:if>
+	<c:remove var="message" scope="session" />
 <h1>Questions for "<u>${exam.examName }</u>" exam</h1>
 
 	<div>

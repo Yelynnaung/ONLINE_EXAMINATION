@@ -11,6 +11,8 @@ public interface UserService {
 	public void save(User user);
 
 	public List<User> getAllUsers();
+	
+	public List<User> getByRole(String userRole);
 
 	public List<User> getUsersByConditions(String username, String email);
 
